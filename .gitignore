@@ -1,0 +1,12 @@
+.env
+
+*.json
+
+*.log
+
+test.py
+huggingfacesenttest.py
+
+
+data/
+
