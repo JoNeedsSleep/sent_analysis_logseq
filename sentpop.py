@@ -73,8 +73,9 @@ def block_split(file_path, token_limit=512):
 
 
 # Example usage
-file_path = "/Users/jialingjiao/Library/CloudStorage/OneDrive-TheUniversityofChicago/AI/sent analysis 2311/data/2023_12_17.txt"
-blocks = block_split(file_path)
+#file_path = ""
+#blocks = block_split(file_path)
+
 '''
 for i, block in enumerate(blocks):
     print(f"Block {i+1}:\n{block}\n---\n")

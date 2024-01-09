@@ -15,15 +15,19 @@ import logging
 logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s:%(message)s')
 
 
-#the RoBERTa sentiment analysis model we are using
-#API_URL = "https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions"
 
 #load from .env file
 load_dotenv()
 my_api = os.environ.get("HUGGINGFACE_API_KEY")
 data_path = os.environ.get("DATA_PATH")
-API_URL = os.environ.get("ENDPOINT_URL")
+
 headers = {"Authorization": f"Bearer {my_api}"}
+
+#the RoBERTa sentiment analysis model we are using
+#load custom inference endpoint
+API_URL = os.environ.get("ENDPOINT_URL")
+#free inference endpoint
+#API_URL = "https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions"
 
 def sent_query(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
@@ -39,8 +43,9 @@ def sent_query(payload):
 
         # Check if the error is due to input length and we haven't already attempted to remove Chinese characters
         if 'Input is too long' in error_message:
-            print("Input too long. Removing Chinese characters and retrying.")
-            print(payload['inputs'])
+            print("Input too long. Removing Chinese characters and truncating to 80% of original. retrying.")
+            #print(payload['inputs'])
+            
             old_text = payload['inputs']
             payload['inputs'] = re.sub(r'[\u4e00-\u9fff]+', '', payload['inputs'])
             return sent_query(split_text_by_percentage(old_text, payload['inputs'],0.8))
@@ -56,7 +61,8 @@ def sent_query(payload):
 sent_data = sentpop()
 
 for file_path in glob.glob(os.path.join(data_path, "*.txt")):
-    print(file_path)
+    #print(file_path)
+
     #split the content of the .txt into a list of strings separated by block and with max char of 1800 to accomodate for the token limit for calling roBERTa
     block_holder = block_split(file_path)
 
@@ -70,7 +76,6 @@ for file_path in glob.glob(os.path.join(data_path, "*.txt")):
             update_json_file('output.json',sent_data.data)
             print(score)
             print(block)
-        print(score)
         normalized_score = normalize_sent_score(score)
 
         #extract the date from the file path
