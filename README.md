@@ -5,7 +5,7 @@ I came upon this video by Matt D'Avella a while back about systematically tracki
 I did a similar project with the lexicon-based [Vader](https://pypi.org/project/vaderSentiment/) module but the accuracy was too low. I'm using the [RoBERTa model](https://huggingface.co/SamLowe/roberta-base-go_emotions/tree/main) trained on the [Go Emotions](https://huggingface.co/datasets/go_emotions) dataset which still is limited not least by the labellers who thought "LETS FUCKING GOOOOO" meant anger. By [some estimation](https://www.surgehq.ai/blog/30-percent-of-googles-reddit-emotions-dataset-is-mislabeled) 30% of the Go Emotions dataset is blatantly wrong. Recognizing the limitations, this is probably still the best and most cost-efficient solution we have.
 
 An interesting example is a short story [Girl](https://www.newyorker.com/magazine/1978/06/26/girl) by Jamaica Kincaid which the vedar model rated as 0.9931 but the RoBERTa model rated as -0.368, after normalizing the positive and negative scores. Given that this is a fragmented second-person narrative the model needed to grasp more subtle clues about the text to conclude--rightly--that the key emotion is more negative than positive.
-```
+```json
     {'label': 'neutral', 'score': 0.7813245058059692},
     {'label': 'disapproval', 'score': 0.12890969216823578},
     {'label': 'annoyance', 'score': 0.0523228719830513},
