@@ -9,6 +9,7 @@ from json_file import load_data
 
 data = load_data('output.json')
 
+
 average_scores_by_date = {}
 for date, blocks in data.items():
     normalized_scores = [block['normalized_score'] for block in blocks.values()]

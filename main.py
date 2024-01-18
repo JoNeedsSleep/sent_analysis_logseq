@@ -11,9 +11,9 @@ from sentpop import block_split, tokenizer, split_text_by_percentage
 from calc_sent_score import normalize_sent_score, positive_emotions, negative_emotions
 from json_file import recursive_merge, update_json_file
 
+#debug log
 import logging
 logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s:%(message)s')
-
 
 
 #load from .env file
